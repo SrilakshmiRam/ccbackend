@@ -64,7 +64,7 @@ app.post('/bookings', async (req, res) => {
 
     const insertQuery = `
         INSERT INTO Bookings (student_name, mentor_id, booking_date, booking_time, notes,duration)
-        VALUES (?, ?, ?, ?, ?)`;
+        VALUES (?, ?, ?, ?, ?, ?)`;
 
     try {
     const { studentname, mentorid, time, date, notes,selectedDuration } = req.body;
@@ -74,5 +74,5 @@ app.post('/bookings', async (req, res) => {
         console.error('Error inserting booking:', error.message);
         res.status(500).json({ error: 'Failed to create booking' });
     }
-});
+}); 
 
