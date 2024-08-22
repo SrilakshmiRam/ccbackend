@@ -57,17 +57,18 @@ app.get('/bookings', async (req, res) => {
 });
 
 app.post('/bookings', async (req, res) => {
-    const { studentname, mentorid, time, date, notes } = req.body;
+    const { studentname, mentorid, time, date, notes,selectedDuration } = req.body;
 
     // Log incoming request data for debugging
     console.log(req.body);
 
     const insertQuery = `
-        INSERT INTO Bookings (student_name, mentor_id, booking_date, booking_time, notes)
+        INSERT INTO Bookings (student_name, mentor_id, booking_date, booking_time, notes,duration)
         VALUES (?, ?, ?, ?, ?)`;
 
     try {
-        await db.run(insertQuery, [studentname, mentorid, date, time, notes]);
+    const { studentname, mentorid, time, date, notes,selectedDuration } = req.body;
+        await db.run(insertQuery, [studentname, mentorid, date, time, notes,selectedDuration]);
         res.status(201).json({ message: 'Booking created successfully' });
     } catch (error) {
         console.error('Error inserting booking:', error.message);
