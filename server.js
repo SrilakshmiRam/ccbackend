@@ -8,7 +8,7 @@ const app = express();
 const dbPath = path.join(__dirname, 'ccdata.db');
 
 app.use(cors({
-    origin: 'https://ccfrontend-eight.vercel.app/', // Adjust to match your frontend URL
+    origin: 'https://ccfrontend-eight.vercel.app', // Adjust to match your frontend URL
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type']
 }));
