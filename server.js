@@ -57,22 +57,44 @@ app.get('/bookings', async (req, res) => {
 });
 
 app.post('/bookings', async (req, res) => {
-    const { studentname, mentorid, time, date, notes,selectedDuration } = req.body;
+    const { studentname, mentorid, time, date, notes, selectedDuration } = req.body;
 
     // Log incoming request data for debugging
-    console.log(req.body);
+    console.log('Incoming booking request:', req.body);
 
     const insertQuery = `
-        INSERT INTO Bookings (student_name, mentor_id, booking_date, booking_time, notes,duration)
+        INSERT INTO Bookings (student_name, mentor_id, booking_date, booking_time, notes, duration)
         VALUES (?, ?, ?, ?, ?, ?)`;
 
     try {
-    const { studentname, mentorid, time, date, notes,selectedDuration } = req.body;
-        await db.run(insertQuery, [studentname, mentorid, date, time, notes,selectedDuration]);
+        await db.run(insertQuery, [studentname, mentorid, date, time, notes, selectedDuration]);
         res.status(201).json({ message: 'Booking created successfully' });
     } catch (error) {
         console.error('Error inserting booking:', error.message);
         res.status(500).json({ error: 'Failed to create booking' });
     }
-}); 
+});
+
+// Add DELETE endpoint if needed
+app.delete('/bookings', async (req, res) => {
+    const { studentName } = req.body;
+
+    if (!studentName) {
+        return res.status(400).json({ error: 'Student name is required' });
+    }
+
+    const deleteQuery = 'DELETE FROM Bookings WHERE student_name = ?';
+
+    try {
+        await db.run(deleteQuery, [studentName]);
+        res.status(200).json({ message: 'Booking deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting booking:', error.message);
+        res.status(500).json({ error: 'Failed to delete booking' });
+    }
+});
+
+
+
+
 
