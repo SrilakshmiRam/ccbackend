@@ -75,24 +75,6 @@ app.post('/bookings', async (req, res) => {
     }
 });
 
-// Add DELETE endpoint if needed
-app.delete('/bookings', async (req, res) => {
-    const { studentName } = req.body;
-
-    if (!studentName) {
-        return res.status(400).json({ error: 'Student name is required' });
-    }
-
-    const deleteQuery = 'DELETE FROM Bookings WHERE student_name = ?';
-
-    try {
-        await db.run(deleteQuery, [studentName]);
-        res.status(200).json({ message: 'Booking deleted successfully' });
-    } catch (error) {
-        console.error('Error deleting booking:', error.message);
-        res.status(500).json({ error: 'Failed to delete booking' });
-    }
-});
 
 
 
